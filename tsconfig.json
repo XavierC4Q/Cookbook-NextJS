@@ -27,7 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     "jest.config.js"
-  ],
+, "__mocks__/createUserProfileMock.js"  ],
   "exclude": [
     "node_modules"
   ]

@@ -4,6 +4,7 @@ import { Connection, createConnection, getConnectionOptions } from "typeorm";
 export const initializeDatabase = async (
   optionOverrides: Record<string, any> = {}
 ): Promise<Connection> => {
+  console.log('BEGIN', process.env)
   const connectionOptions = await getConnectionOptions();
   const IS_TEST = process.env.NODE_ENV === "test";
   const database = IS_TEST ? process.env.DB_NAME_TEST : process.env.DB_NAME;
