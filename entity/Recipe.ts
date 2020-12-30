@@ -1,8 +1,11 @@
-import {Entity, Column, ManyToOne} from 'typeorm';
+import {Entity, Column, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 import Profile from './Profile';
 
 @Entity()
 class Recipe {
+    @PrimaryGeneratedColumn()
+    id: string;
+
     @ManyToOne(() => Profile, profile => profile.recipes)
     profile: Profile;
 

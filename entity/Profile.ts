@@ -1,32 +1,41 @@
-import {Entity, Column, OneToMany, CreateDateColumn, UpdateDateColumn} from 'typeorm';
-import Recipe from './Recipe';
+import {
+  Entity,
+  Column,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import Recipe from "./Recipe";
 
 @Entity()
 class Profile {
-    @Column('varchar', {nullable: false})
-    firstName: string;
+  @PrimaryGeneratedColumn()
+  id: string;
 
-    @Column('varchar', {nullable: false})
-    lastName: string;
+  @Column("varchar", { nullable: false })
+  firstName: string;
 
-    @Column('varchar', {default: ''})
-    displayName: string;
+  @Column("varchar", { nullable: false })
+  lastName: string;
 
-    @Column('varchar', {default: ''})
-    headline: string;
+  @Column("varchar", { default: "" })
+  displayName: string;
 
-    @Column('varchar', {default: ''})
-    description: string;
+  @Column("varchar", { default: "" })
+  headline: string;
 
-    @CreateDateColumn()
-    createdOn: number;
+  @Column("varchar", { default: "" })
+  description: string;
 
-    @UpdateDateColumn()
-    updatedOn: number;
+  @CreateDateColumn()
+  createdOn: number;
 
-    @OneToMany(() => Recipe, recipe => recipe.profile)
-    recipes: Recipe[];
+  @UpdateDateColumn()
+  updatedOn: number;
+
+  @OneToMany(() => Recipe, (recipe) => recipe.profile)
+  recipes: Recipe[];
 }
 
 export default Profile;
-
