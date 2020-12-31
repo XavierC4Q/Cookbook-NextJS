@@ -9,7 +9,10 @@ import jwt from "jsonwebtoken";
 const handleCreateUserProfile = async (
   req: NextApiRequest,
   res: NextApiResponse
-) => { 
+) => {
+  if (req.method !== 'POST') {
+    return res.status(405).end();
+  } 
   try {
     const { firstName, lastName, email, password } = req.body;
     const ROUNDS = 10;
