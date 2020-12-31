@@ -9,13 +9,13 @@ import jwt from "jsonwebtoken";
 const handleCreateUserProfile = async (
   req: NextApiRequest,
   res: NextApiResponse
-) => {
-  const { firstName, lastName, email, password } = req.body;
-  const rounds = 10;
-  const salt = bcrypt.genSaltSync(rounds);
-  const hash = bcrypt.hashSync(password, salt);
-
+) => { 
   try {
+    const { firstName, lastName, email, password } = req.body;
+    const ROUNDS = 10;
+    const salt = bcrypt.genSaltSync(ROUNDS);
+    const hash = bcrypt.hashSync(password, salt);
+    
     const connection = await initializeDatabase();
     const userRepository = getRepository(User);
     const profileRepository = getRepository(Profile);

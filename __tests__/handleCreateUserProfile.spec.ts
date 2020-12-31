@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { createMocks } from "node-mocks-http";
 import initializeDatabase from "../db/initDB";
 import handleCreateUserProfile from "../pages/api/profile/handleCreateUserProfile";
@@ -31,6 +32,10 @@ describe("/api/profile/handleCreateUserProfile", () => {
     await handleCreateUserProfile(req, res);
 
     expect(res._getStatusCode()).toBe(201);
+    
+    const {data} = res._getJSONData();
+    expect(data.user.email).toEqual(mockUserProfile.email);
+
     done();
   });
 });
