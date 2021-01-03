@@ -19,7 +19,7 @@ class Profile {
   @Column("varchar", { nullable: false })
   lastName: string;
 
-  @Column("varchar", { default: "", unique: true })
+  @Column("varchar", { unique: true, nullable: true })
   displayName: string;
 
   @Column("varchar", { default: "" })
