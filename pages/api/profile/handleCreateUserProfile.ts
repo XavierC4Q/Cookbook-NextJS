@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import initializeDatabase from "../../../db/initDB";
 import User from "../../../entity/User";
 import Profile from "../../../entity/Profile";
-import { getRepository } from "typeorm";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -20,8 +19,8 @@ const handleCreateUserProfile = async (
     const hash = bcrypt.hashSync(password, salt);
     
     const connection = await initializeDatabase();
-    const userRepository = getRepository(User);
-    const profileRepository = getRepository(Profile);
+    const userRepository = connection.getRepository(User);
+    const profileRepository = connection.getRepository(Profile);
 
     const newProfile = new Profile();
     newProfile.firstName = firstName;
@@ -53,6 +52,7 @@ const handleCreateUserProfile = async (
       },
     });
   } catch (e) {
+    console.log('CREATE ERRRR', e.message)
     return res.status(400).json({ message: e.message });
   }
 };

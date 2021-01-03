@@ -1,7 +1,6 @@
 import handleUpdateProfile from "../../pages/api/profile/handleUpdateProfile";
 import { createMocks } from "node-mocks-http";
 import initializeDatabase from "../../db/initDB";
-import { getRepository } from "typeorm";
 import Profile from "../../entity/Profile";
 import User from "../../entity/User";
 
@@ -16,8 +15,8 @@ jest.mock("jsonwebtoken", () => ({
 
 beforeAll(async () => {
   const connection = await initializeDatabase();
-  const profileRepository = getRepository(Profile);
-  const userRepository = getRepository(User);
+  const profileRepository = connection.getRepository(Profile);
+  const userRepository = connection.getRepository(User);
 
   const newProfile = new Profile();
   newProfile.firstName = "Test";
@@ -31,12 +30,6 @@ beforeAll(async () => {
   newUser.profile = newProfile;
   await userRepository.save(newUser);
 
-  await connection.close();
-});
-
-afterAll(async () => {
-  const connection = await initializeDatabase();
-  await connection.dropDatabase();
   await connection.close();
 });
 

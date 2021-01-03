@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { createMocks } from "node-mocks-http";
-import initializeDatabase from "../../db/initDB";
 import handleCreateUserProfile from "../../pages/api/profile/handleCreateUserProfile";
+import initializeDatabase from '../../db/initDB';
 
 const mockUserProfile = {
   firstName: "Xavier",
@@ -10,17 +10,14 @@ const mockUserProfile = {
   password: "passwordissecrethushhush",
 };
 
-beforeEach(() => {
-  jest.setTimeout(30000);
-});
-
-afterAll(async () => {
+beforeAll(async () => {
   const connection = await initializeDatabase();
   await connection.dropDatabase();
   await connection.close();
 });
 
 describe("/api/profile/handleCreateUserProfile", () => {
+
   test("can create a user profile", async () => {
     const { req, res } = createMocks({
       method: "POST",
@@ -35,8 +32,8 @@ describe("/api/profile/handleCreateUserProfile", () => {
     await handleCreateUserProfile(req, res);
 
     expect(res._getStatusCode()).toBe(201);
-    
-    const {data} = res._getJSONData();
+
+    const { data } = res._getJSONData();
     expect(data.user.email).toEqual(mockUserProfile.email);
   });
 });

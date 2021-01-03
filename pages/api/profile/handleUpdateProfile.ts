@@ -2,7 +2,6 @@ import loginRequired from "../../../utils/loginRequired";
 import { NextApiRequest, NextApiResponse } from "next";
 import initializeDatabase from "../../../db/initDB";
 import Profile from "../../../entity/Profile";
-import { getRepository } from "typeorm";
 
 const handleUpdateProfile = async (
   req: NextApiRequest,
@@ -13,7 +12,7 @@ const handleUpdateProfile = async (
   }
   try {
     const connection = await initializeDatabase();
-    const profileRespository = getRepository(Profile);
+    const profileRespository = connection.getRepository(Profile);
     const profile = await profileRespository.findOne(req.body.id);
 
     if (!profile) {
