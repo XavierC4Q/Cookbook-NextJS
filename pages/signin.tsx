@@ -1,21 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import getTestIDs from "../utils/getTestId";
-import { AuthUser } from "../context/authContext";
-
-interface IProps {
-  user: AuthUser | null;
-}
+import { AuthContext } from "../context/authContext";
 
 export const signinTestIds = getTestIDs();
 
-function SignIn({ user }: IProps) {
+function SignIn() {
+  const {user} = useContext(AuthContext);
   return <div data-testid={signinTestIds.signinPage}></div>;
 }
-
-export const getInitialProps = async ({ user }: IProps) => {
-  return {
-    user,
-  };
-};
 
 export default SignIn;

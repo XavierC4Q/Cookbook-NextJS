@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 
 describe("[PAGE] signin page", () => {
   test("renders the signin", () => {
-    const { getByTestId } = render(<SignIn user={null} />);
+    const { getByTestId } = render(<SignIn />);
     getByTestId(signinTestIds.signinPage);
   });
 });

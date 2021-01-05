@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useReducer } from "react";
 import User from "../entity/User";
 import fetch from "isomorphic-unfetch";
 
@@ -7,13 +7,74 @@ export type AuthUser = Omit<User, "password">;
 interface IAuthContext {
   user?: AuthUser | null;
   loading?: boolean;
+  error?: boolean;
   logout?: () => void;
+  signin?: (email: string, password: string) => void;
+}
+
+interface IState {
+  user: AuthUser | null;
+  loading: boolean;
+  error: boolean;
+}
+
+enum AuthActionTypes {
+  SIGNIN = "[auth] SIGNIN",
+  LOGOUT = "[auth] LOGOUT",
+  LOADING = "[auth] LOADING",
+  ERROR = "[auth] ERROR",
+}
+
+interface IAuthAction {
+  type: AuthActionTypes;
+  payload?: AuthUser | null;
 }
 
 export const AuthContext = createContext<IAuthContext>({});
 
 function AuthProvider({ children }: { children: any }) {
-  const [user, setUser] = useState<AuthUser | null>(null);
+
+  const initialState: IState = {
+    user: null,
+    loading: false,
+    error: false,
+  };
+
+  const reducer = (state: IState, action: IAuthAction): IState => {
+    switch (action.type) {
+      case AuthActionTypes.SIGNIN:
+        return {
+          user: action.payload!,
+          loading: false,
+          error: false,
+        };
+      case AuthActionTypes.LOGOUT:
+        return {
+          user: null,
+          loading: false,
+          error: false,
+        };
+      case AuthActionTypes.LOADING:
+        return {
+          ...state,
+          loading: true,
+          error: false,
+        };
+      case AuthActionTypes.ERROR:
+        return {
+          ...state,
+          loading: false,
+          error: true,
+        };
+      default:
+        return state;
+    }
+  };
+
+  const [{ user, loading, error }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   useEffect(() => {
     let token: string | null = null;
@@ -24,6 +85,7 @@ function AuthProvider({ children }: { children: any }) {
 
     if (token) {
       const getUser = async () => {
+        dispatch({ type: AuthActionTypes.LOADING });
         try {
           const fetchUser = await fetch("/api/auth/handleGetUser", {
             method: "GET",
@@ -34,7 +96,10 @@ function AuthProvider({ children }: { children: any }) {
 
           const userData = await fetchUser.json();
 
-          setUser(userData.data.user);
+          dispatch({
+            type: AuthActionTypes.SIGNIN,
+            payload: userData.data.user,
+          });
         } catch {}
       };
 
@@ -42,15 +107,37 @@ function AuthProvider({ children }: { children: any }) {
     }
   }, []);
 
-  const logout = () => {
-    if (typeof window !== 'undefined') {
-      window.localStorage.removeItem('auth_token');
+  const signin = async (email: string, password: string) => {
+    dispatch({ type: AuthActionTypes.LOADING });
+    try {
+      const req = await fetch("/api/auth/handleSignIn", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+      const userData = await req.json();
+
+      window.localStorage.setItem("auth_token", userData.token);
+      dispatch({ type: AuthActionTypes.SIGNIN, payload: userData.user });
+    } catch (e) {
+      console.error(e);
+      dispatch({ type: AuthActionTypes.ERROR });
     }
-    setUser(null);
-  }
+  };
+
+  const logout = () => {
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem("auth_token");
+    }
+    dispatch({ type: AuthActionTypes.LOGOUT });
+  };
 
   return (
-    <AuthContext.Provider value={{ user, logout }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, logout, loading, error, signin }}>
+      {children}
+    </AuthContext.Provider>
   );
 }
 
