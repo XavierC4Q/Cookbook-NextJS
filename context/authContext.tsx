@@ -2,14 +2,15 @@ import React, { createContext, useEffect, useState } from "react";
 import User from "../entity/User";
 import fetch from "isomorphic-unfetch";
 
-type AuthUser = Omit<User, "password">;
+export type AuthUser = Omit<User, "password">;
 
 interface IAuthContext {
   user?: AuthUser | null;
+  loading?: boolean;
   logout?: () => void;
 }
 
-const AuthContext = createContext<IAuthContext>({});
+export const AuthContext = createContext<IAuthContext>({});
 
 function AuthProvider({ children }: { children: any }) {
   const [user, setUser] = useState<AuthUser | null>(null);
