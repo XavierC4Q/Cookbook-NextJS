@@ -14,7 +14,6 @@ const handleUpdateProfile = async (
     const connection = await initializeDatabase();
     const profileRespository = connection.getRepository(Profile);
     const profile = await profileRespository.findOne(req.body.id);
-
     if (!profile) {
       return res.status(400).send(`No profile for id ${req.body.id}`);
     }

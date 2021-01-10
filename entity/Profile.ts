@@ -11,7 +11,7 @@ import Recipe from "./Recipe";
 @Entity()
 class Profile {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column("varchar", { nullable: false })
   firstName: string;

@@ -4,7 +4,7 @@ import Profile from './Profile';
 @Entity()
 class Recipe {
     @PrimaryGeneratedColumn()
-    id: string;
+    id: number;
 
     @ManyToOne(() => Profile, profile => profile.recipes)
     profile: Profile;

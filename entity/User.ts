@@ -10,7 +10,7 @@ import Profile from "./Profile";
 @Entity()
 class User {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column("varchar", { unique: true, nullable: false })
   email: string;

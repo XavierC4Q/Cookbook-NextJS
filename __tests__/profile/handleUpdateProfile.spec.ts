@@ -4,12 +4,12 @@ import initializeDatabase from "../../db/initDB";
 import Profile from "../../entity/Profile";
 import User from "../../entity/User";
 
-let PROFILE_ID: string;
+const PROFILE_ID = 1;
 
 jest.mock("jsonwebtoken", () => ({
   verify: jest.fn(() => ({
     email: "test@email.com",
-    id: 1,
+    id: PROFILE_ID,
   })),
 }));
 
@@ -21,9 +21,7 @@ beforeAll(async () => {
   const newProfile = new Profile();
   newProfile.firstName = "Test";
   newProfile.lastName = "User";
-  PROFILE_ID = newProfile.id;
   await profileRepository.save(newProfile);
-
   const newUser = new User();
   newUser.email = "test@email.com";
   newUser.password = "password";

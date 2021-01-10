@@ -12,6 +12,8 @@
     "@babel/plugin-proposal-decorators": "^7.12.12",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
+    "@testing-library/dom": "^7.29.0",
+    "@testing-library/jest-dom": "^5.11.8",
     "@types/bcryptjs": "^2.4.2",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/node": "^14.14.16",
@@ -38,6 +40,7 @@
     "@babel/preset-typescript": "^7.12.7",
     "@testing-library/react": "^11.2.2",
     "@types/jest": "^26.0.19",
-    "@types/regenerator-runtime": "^0.13.0"
+    "@types/regenerator-runtime": "^0.13.0",
+    "babel-jest": "^26.6.3"
   }
 }

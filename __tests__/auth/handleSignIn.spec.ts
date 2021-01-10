@@ -4,7 +4,7 @@ import { createMocks } from "node-mocks-http";
 import User from "../../entity/User";
 
 const mockCreds = {
-  id: "999",
+  id: 999,
   email: "testuser2@email.com",
   password: "fakepassword",
 };
