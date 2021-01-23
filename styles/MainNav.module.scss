@@ -1,0 +1,15 @@
+@import "mixins";
+.container {
+  .navDesktop {
+    display: none;
+    @include breakpoint(md) {
+      display: block;
+    }
+  }
+
+  .navMobile {
+    @include breakpoint(md) {
+      display: none;
+    }
+  }
+}
