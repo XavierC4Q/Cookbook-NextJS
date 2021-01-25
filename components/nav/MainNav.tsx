@@ -1,12 +1,32 @@
 import React from "react";
-import styles from "../../styles/MainNav.module.scss";
+import Image from "next/image";
+import Link from "next/link";
+import styles from "../../styles/modules/MainNav.module.scss";
 
 function MainNav() {
+  const DesktopNav = () => (
+    <nav className={styles.navDesktop}>
+      <Link href="/">
+        <Image
+          src="/images/icons/icon-chef-hat.svg"
+          className={styles.navHomeImg}
+          layout="fill"
+        />
+      </Link>
+      {/*TODO: Update to actual links later*/}
+      <div className={styles.navDesktopLinks}>
+        <ul>
+          <Link href="user/profile">Profile</Link>
+        </ul>
+      </div>
+    </nav>
+  );
 
+  const MobileNav = () => <nav className={styles.navMobile}></nav>;
   return (
     <div className={styles.container}>
-      <nav className={styles.navDesktop}></nav>
-      <nav className={styles.navMobile}></nav>
+      <DesktopNav />
+      <MobileNav />
     </div>
   );
 }
