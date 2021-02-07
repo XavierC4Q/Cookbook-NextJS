@@ -136,22 +136,16 @@
       background-color: #fff;
     }
 
-    #burger.active {
-      .burgerBar__1 {
-        transform: rotate(45deg);
-      }
+    #burger.active .burgerBar__1 {
+      transform: rotate(45deg);
     }
 
-    #burger.active {
-      .burgerBar__2 {
-        opacity: 0;
-      }
+    #burger.active .burgerBar__2 {
+      opacity: 0;
     }
 
-    #burger.active {
-      .burgerBar__3 {
-        transform: rotate(-45deg);
-      }
+    #burger.active .burgerBar__3 {
+      transform: rotate(-45deg);
     }
   }
 }

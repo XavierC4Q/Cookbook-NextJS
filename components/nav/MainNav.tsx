@@ -39,7 +39,7 @@ function MainNav({
       </Link>
       <div
         id={styles.burger}
-        className={mobileNavOpen ? "active" : ""}
+        className={mobileNavOpen ? styles.active : ''}
         onClick={toggleNav}
       >
         <button type="button" className={styles.burgerButton}>
