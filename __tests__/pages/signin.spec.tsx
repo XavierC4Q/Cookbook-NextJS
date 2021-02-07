@@ -31,7 +31,6 @@ describe("[PAGE] signin page", () => {
         value: "testpassword",
       },
     });
-
     fireEvent.submit(submitBtn);
   });
 });

@@ -44,7 +44,9 @@ function SignIn() {
             placeholder="Password"
             onChange={handleChange}
           />
-          <button data-testid={testIds.submitBtn} type="submit">Submit</button>
+          <button data-testid={testIds.submitBtn} type="submit">
+            Submit
+          </button>
         </form>
       )}
       {error && <p>Could not sign you in</p>}
