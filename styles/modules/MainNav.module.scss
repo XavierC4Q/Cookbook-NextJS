@@ -8,26 +8,23 @@
   height: 3.5rem;
   box-shadow: $nav-shadow;
 
-  .navDesktop,
-  .navMobile {
-    .navHomeImg {
-      position: relative !important;
-      min-width: auto !important;
-      min-height: auto !important;
-      height: 3rem !important;
-      width: 3rem !important;
-      margin: 0 !important;
-      padding-top: 0.5rem !important;
-      cursor: pointer;
-    }
-  }
-
   .navDesktop {
     display: none;
     @include breakpoint(md) {
       display: flex;
       width: 100%;
       height: 100%;
+
+      .navHomeImg {
+        position: relative !important;
+        min-width: auto !important;
+        min-height: auto !important;
+        height: 3rem !important;
+        width: 3rem !important;
+        margin: 0 !important;
+        padding-top: 0.5rem !important;
+        cursor: pointer;
+      }
 
       div:not(.navDesktopLinks) {
         position: relative !important;
@@ -54,8 +51,25 @@
     display: flex;
     width: 100%;
     height: 100%;
+    justify-content: space-between;
+
     @include breakpoint(md) {
       display: none;
+    }
+
+    .navHomeImg {
+      position: relative !important;
+      min-width: auto !important;
+      min-height: auto !important;
+      height: 3rem !important;
+      width: 3rem !important;
+      margin: 0 !important;
+      padding-top: 0.5rem !important;
+      cursor: pointer;
+    }
+
+    div:not(#burger) {
+      position: relative !important;
     }
 
     #burger {
@@ -114,7 +128,7 @@
       transform: translateY(6px);
     }
 
-    #burger.active .burger-button {
+    #burger.active .burgerButton {
       transform: rotate(-180deg);
     }
 
@@ -122,16 +136,22 @@
       background-color: #fff;
     }
 
-    #burger.active .burgerBar__1 {
-      transform: rotate(45deg);
+    #burger.active {
+      .burgerBar__1 {
+        transform: rotate(45deg);
+      }
     }
 
-    #burger.active .burgerBar__2 {
-      opacity: 0;
+    #burger.active {
+      .burgerBar__2 {
+        opacity: 0;
+      }
     }
 
-    #burger.active .burgerBar__3 {
-      transform: rotate(-45deg);
+    #burger.active {
+      .burgerBar__3 {
+        transform: rotate(-45deg);
+      }
     }
   }
 }
