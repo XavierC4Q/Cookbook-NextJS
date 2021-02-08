@@ -10,10 +10,14 @@ import { useState } from "react";
 function MyApp({ Component, pageProps }: AppProps) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const toggleMobileNav = () => setMobileNavOpen(!mobileNavOpen);
+
   return (
     <AuthProvider>
       <MainNav mobileNavOpen={mobileNavOpen} toggleNav={toggleMobileNav} />
-      {mobileNavOpen && <MobileSideMenu toggleNav={toggleMobileNav} />}
+        <MobileSideMenu
+          mobileNavOpen={mobileNavOpen}
+          toggleNav={toggleMobileNav}
+        />
       <Component {...pageProps} />
     </AuthProvider>
   );

@@ -1,11 +1,38 @@
+import { useEffect, useRef } from "react";
 import styles from "../../styles/modules/MobileSideMenu.module.scss";
 
-function MobileSideMenu({ toggleNav }: { toggleNav: () => void }) {
+function MobileSideMenu({
+  mobileNavOpen,
+  toggleNav,
+}: {
+  mobileNavOpen: boolean;
+  toggleNav: () => void;
+}) {
+  const navRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (navRef.current && !(navRef.current as any).contains(event.target)) {
+        toggleNav();
+        console.log('CLICKED')
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [navRef]);
+
   return (
     <div className={styles.sidebar}>
-      <div className={styles["sidebar-backdrop"]} />
-      <div>
-        <div className={styles["sidebar-panel"]}>
+      <div className={mobileNavOpen ? styles["sidebar-backdrop"] : ""} />
+      <div
+        className={`${styles.slide} ${
+          mobileNavOpen ? styles.slideIn : styles.slideOut
+        }`}
+      >
+        <div className={styles["sidebar-panel"]} ref={navRef}>
           <ul>
             <li>test1</li>
             <li>test2</li>

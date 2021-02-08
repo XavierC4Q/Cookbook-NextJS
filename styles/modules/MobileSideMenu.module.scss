@@ -4,14 +4,18 @@
     display: none;
   }
 
-  .slide-enter-active,
-  .slide-leave-active {
-    transition: transform 0.2s ease;
+  .slide {
+    transition: 0.8s ease;
+    position: absolute;
+    height: 100%;
   }
-  .slide-enter,
-  .slide-leave-to {
-    transform: translateX(-100%);
-    transition: all 150ms ease-in 0s;
+
+  .slideOut {
+    transform: translateX(-300px);
+  }
+
+  .slideIn {
+    transform: translate(0px);
   }
 
   .sidebar-backdrop {
@@ -26,11 +30,11 @@
 
   .sidebar-panel {
     overflow-y: auto;
-    background-color: #130f40;
+    background-color: $body-color;
     position: fixed;
     left: 0;
     top: 0;
-    height: 100vh;
+    height: 100% !important;
     z-index: 999;
     padding: 3rem 20px 2rem 20px;
     width: 300px;

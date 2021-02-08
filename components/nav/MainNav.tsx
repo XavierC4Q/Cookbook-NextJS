@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import styles from "../../styles/modules/MainNav.module.scss";
 
 function MainNav({
@@ -10,15 +11,16 @@ function MainNav({
   mobileNavOpen: boolean;
   toggleNav: () => void;
 }) {
+  const router = useRouter();
+
   const DesktopNav = () => (
     <nav className={styles.navDesktop}>
-      <Link href="/">
-        <Image
-          src="/images/icons/icon-chef-hat.svg"
-          className={styles.navHomeImg}
-          layout="fill"
-        />
-      </Link>
+      <Image
+        src="/images/icons/icon-chef-hat.svg"
+        className={styles.navHomeImg}
+        layout="fill"
+        onClick={() => router.replace("/")}
+      />
       {/*TODO: Update to actual links later*/}
       <div className={styles.navDesktopLinks}>
         <ul>
@@ -30,16 +32,15 @@ function MainNav({
 
   const MobileNav = () => (
     <nav className={styles.navMobile}>
-      <Link href="/">
-        <Image
-          src="/images/icons/icon-chef-hat.svg"
-          className={styles.navHomeImg}
-          layout="fill"
-        />
-      </Link>
+      <Image
+        src="/images/icons/icon-chef-hat.svg"
+        className={styles.navHomeImg}
+        layout="fill"
+        onClick={() => router.replace("/")}
+      />
       <div
         id={styles.burger}
-        className={mobileNavOpen ? styles.active : ''}
+        className={mobileNavOpen ? styles.active : ""}
         onClick={toggleNav}
       >
         <button type="button" className={styles.burgerButton}>
