@@ -49,7 +49,7 @@ function MainNav({
           <span className={`${styles.burgerBar} ${styles.burgerBar__3}`}></span>
         </button>
       </div>
-    </nav>
+    </nav> 
   );
 
   return (

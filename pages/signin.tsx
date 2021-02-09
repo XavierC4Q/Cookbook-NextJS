@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import getTestIDs from "../utils/getTestId";
 import { AuthContext } from "../context/authContext";
 import Input from "../components/shared/Input";
+import { Container, Form, Header, Dimmer, Loader } from "semantic-ui-react";
 
 export const testIds = getTestIDs();
 
@@ -23,34 +24,38 @@ function SignIn() {
   };
 
   return (
-    <div data-testid={testIds.signinPage}>
-      {loading && <div>Signing you in now...</div>}
-      {!loading && !user && (
-        <form onSubmit={handleSubmit}>
-          <h2>Sign In Here</h2>
-          <Input
-            id="_email"
-            name="email"
-            placeholder="Email"
-            value={inputs.email}
-            label="Enter Your Email"
-            onChange={handleChange}
-          />
-          <Input
-            id="_password"
-            name="password"
-            value={inputs.password}
-            label="Enter Your Password"
-            placeholder="Password"
-            onChange={handleChange}
-          />
-          <button data-testid={testIds.submitBtn} type="submit">
-            Submit
-          </button>
-        </form>
-      )}
-      {error && <p>Could not sign you in</p>}
-    </div>
+    <Container>
+      <div data-testid={testIds.signinPage} style={{ paddingTop: "5rem" }}>
+        {loading && (
+          <Dimmer active>
+            <Loader>Signing you in now</Loader>
+          </Dimmer>
+        )}
+        {!loading && !user && (
+          <Form onSubmit={handleSubmit}>
+            <Header size="medium">Sign In Here</Header>
+            <Input
+              id="_email"
+              name="email"
+              placeholder="Email"
+              value={inputs.email}
+              label="Enter Your Email"
+              onChange={handleChange}
+            />
+            <Input
+              id="_password"
+              name="password"
+              value={inputs.password}
+              label="Enter Your Password"
+              placeholder="Password"
+              onChange={handleChange}
+            />
+            <Form.Button data-testid={testIds.submitBtn}>Submit</Form.Button>
+          </Form>
+        )}
+        {error && <p>Could not sign you in</p>}
+      </div>
+    </Container>
   );
 }
 

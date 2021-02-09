@@ -14,7 +14,6 @@ function MobileSideMenu({
     function handleClickOutside(event: any) {
       if (navRef.current && !(navRef.current as any).contains(event.target)) {
         toggleNav();
-        console.log('CLICKED')
       }
     }
 

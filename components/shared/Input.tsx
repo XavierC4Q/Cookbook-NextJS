@@ -1,4 +1,4 @@
-import React from "react";
+import { Input as SUInput } from "semantic-ui-react";
 
 interface IProps {
   id: string;
@@ -14,13 +14,14 @@ const Input = (props: IProps) => {
   return (
     <div>
       <label>{label}</label>
-      <input
+      <SUInput
         id={id}
         type="text"
         name={name}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        fluid
       />
     </div>
   );

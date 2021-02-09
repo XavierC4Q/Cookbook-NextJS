@@ -52,7 +52,6 @@ const handleCreateUserProfile = async (
       },
     });
   } catch (e) {
-    console.log('CREATE ERRRR', e.message)
     return res.status(400).json({ message: e.message });
   }
 };
