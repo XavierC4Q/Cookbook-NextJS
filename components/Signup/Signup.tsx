@@ -1,12 +1,13 @@
 import getTestIDs from "../../utils/getTestId";
-import Input from "../shared/Input";
-import { useState } from "react";
-import { AuthContext } from '../../context/authContext';
+import { Form, Container, Dimmer, Loader } from "semantic-ui-react";
+import { useState, useContext } from "react";
+import { AuthContext, IUserProfileConfig } from "../../context/authContext";
 
 export const testIds = getTestIDs();
 
 function Signup() {
-  const [inputs, setInputs] = useState({
+  const { signup } = useContext(AuthContext);
+  const [inputs, setInputs] = useState<IUserProfileConfig>({
     firstName: "",
     email: "",
     lastName: "",
@@ -18,7 +19,13 @@ function Signup() {
     setInputs({ ...inputs, [name]: value });
   };
 
-  return <div data-testid={testIds.signupPage}>Signup</div>;
+  return (
+    <Container data-testid={testIds.signupPage}>
+      <Form>
+        <Form.Button>Submit</Form.Button>
+      </Form>
+    </Container>
+  );
 }
 
 export default Signup;

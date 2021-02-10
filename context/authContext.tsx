@@ -4,12 +4,20 @@ import fetch from "isomorphic-unfetch";
 
 export type AuthUser = Omit<User, "password">;
 
+export interface IUserProfileConfig {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}
+
 interface IAuthContext {
   user?: AuthUser | null;
   loading?: boolean;
   error?: boolean;
   logout?: () => void;
   signin?: (email: string, password: string) => void;
+  signup?: (config: IUserProfileConfig) => void;
 }
 
 interface IState {
@@ -33,7 +41,6 @@ interface IAuthAction {
 export const AuthContext = createContext<IAuthContext>({});
 
 function AuthProvider({ children }: { children: any }) {
-
   const initialState: IState = {
     user: null,
     loading: false,
@@ -127,6 +134,32 @@ function AuthProvider({ children }: { children: any }) {
     }
   };
 
+  const signup = async ({
+    email,
+    password,
+    firstName,
+    lastName,
+  }: IUserProfileConfig) => {
+    dispatch({ type: AuthActionTypes.LOADING });
+    try {
+      const req = await fetch("/api/profile/handleCreateUserProfile", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+          firstName,
+          lastName,
+        }),
+      });
+      const { data } = await req.json();
+      window.localStorage.setItem("auth_token", data.token);
+      dispatch({ type: AuthActionTypes.SIGNIN, payload: data.user });
+    } catch (e) {
+      console.error(e);
+      dispatch({ type: AuthActionTypes.ERROR });
+    }
+  };
+
   const logout = () => {
     if (typeof window !== "undefined") {
       window.localStorage.removeItem("auth_token");
@@ -135,7 +168,9 @@ function AuthProvider({ children }: { children: any }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, logout, loading, error, signin }}>
+    <AuthContext.Provider
+      value={{ user, logout, loading, error, signin, signup }}
+    >
       {children}
     </AuthContext.Provider>
   );
