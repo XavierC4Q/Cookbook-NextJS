@@ -20,3 +20,7 @@ a {
 p {
   @include font-size(12px);
 }
+
+#__next {
+  padding-top: 5rem;
+}

@@ -1,5 +1,35 @@
+@import "../index.scss";
 .container {
-    .homePage {
-        .welcome {}
+  max-width: 1600px;
+  margin: 0 auto;
+  .homePage {
+    display: flex;
+    width: 100%;
+    padding: 0.8rem;
+    flex-direction: column;
+
+    @include breakpoint(md) {
+      flex-direction: row;
     }
+    .welcome {
+      display: flex;
+      width: 100%;
+      min-height: 6rem;
+
+      h2 {
+        width: 100%;
+        text-align: center;
+      }
+
+      @include breakpoint(md) {
+        min-width: 60%;
+        width: 60%;
+        min-height: initial;
+
+        h2 {
+          text-align: left;
+        }
+      }
+    }
+  }
 }

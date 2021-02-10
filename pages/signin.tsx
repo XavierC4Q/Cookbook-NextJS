@@ -25,7 +25,7 @@ function SignIn() {
 
   return (
     <Container>
-      <div data-testid={testIds.signinPage} style={{ paddingTop: "5rem" }}>
+      <div data-testid={testIds.signinPage}>
         {loading && (
           <Dimmer active>
             <Loader>Signing you in now</Loader>
