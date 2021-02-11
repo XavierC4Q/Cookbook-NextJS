@@ -1,14 +1,11 @@
 import getTestIDs from "../../utils/getTestId";
 import { Form, Container, Header } from "semantic-ui-react";
 import { useState, useContext } from "react";
-import { AuthContext, IUserProfileConfig } from "../../context/authContext";
+import { AuthContext } from "../../context/authContext";
 import Link from "next/link";
+import { ISignupFields } from "../../types/index";
 
 export const testIds = getTestIDs();
-
-interface ISignupFields extends IUserProfileConfig {
-  confirmPassword: string;
-}
 
 const signupFields: ISignupFields = {
   firstName: "",
@@ -19,7 +16,7 @@ const signupFields: ISignupFields = {
 };
 
 function Signup() {
-  const { signup } = useContext(AuthContext);
+  const { signup, error } = useContext(AuthContext);
   const [inputs, setInputs] = useState({
     ...signupFields,
   });
@@ -55,11 +52,17 @@ function Signup() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    signup!({
+      email: inputs.email,
+      password: inputs.password,
+      firstName: inputs.firstName,
+      lastName: inputs.lastName,
+    });
   };
 
   const isDisabled =
-    Object.values(errors).every((e) => e) ||
-    Object.values(inputs).every((i) => !i);
+    Object.values(errors).every((e) => e !== "") ||
+    Object.values(inputs).some((i) => i === "");
 
   return (
     <Container data-testid={testIds.signupPage}>
@@ -76,6 +79,7 @@ function Signup() {
             required
             type="email"
             value={inputs.email}
+            data-testid={testIds.email}
           />
         </Form.Field>
         <Form.Field>
@@ -87,6 +91,7 @@ function Signup() {
             required
             type="text"
             value={inputs.firstName}
+            data-testid={testIds.firstName}
           />
         </Form.Field>
         <Form.Field>
@@ -98,6 +103,7 @@ function Signup() {
             required
             type="text"
             value={inputs.lastName}
+            data-testid={testIds.lastName}
           />
         </Form.Field>
         <Form.Field
@@ -105,6 +111,7 @@ function Signup() {
             errors.password
               ? {
                   content: errors.password,
+                  pointing: 'below'
                 }
               : false
           }
@@ -118,6 +125,7 @@ function Signup() {
             required
             type="password"
             value={inputs.password}
+            data-testid={testIds.password}
           />
         </Form.Field>
         <Form.Field
@@ -125,6 +133,7 @@ function Signup() {
             errors.confirmPassword
               ? {
                   content: errors.confirmPassword,
+                  pointing: 'below'
                 }
               : false
           }
@@ -138,6 +147,7 @@ function Signup() {
             required
             type="password"
             value={inputs.confirmPassword}
+            data-testid={testIds.confirmPassword}
           />
         </Form.Field>
         <Form.Button disabled={isDisabled}>Submit</Form.Button>

@@ -13,7 +13,7 @@ const handleCreateUserProfile = async (
     return res.status(405).end();
   } 
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password } = JSON.parse(req.body);
     const ROUNDS = 10;
     const salt = bcrypt.genSaltSync(ROUNDS);
     const hash = bcrypt.hashSync(password, salt);

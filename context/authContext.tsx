@@ -1,15 +1,6 @@
 import React, { createContext, useEffect, useReducer } from "react";
-import User from "../entity/User";
 import fetch from "isomorphic-unfetch";
-
-export type AuthUser = Omit<User, "password">;
-
-export interface IUserProfileConfig {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-}
+import { AuthUser, IUserProfileConfig } from '../types/index';
 
 interface IAuthContext {
   user?: AuthUser | null;
