@@ -3,20 +3,6 @@ import { Connection, createConnection } from "typeorm";
 import User from "../entity/User";
 import Profile from "../entity/Profile";
 import Recipe from "../entity/Recipe";
-// {
-// 	"type": "postgres",
-// 	"host": "localhost",
-// 	"port": "5432",
-// 	"username": "postgres",
-// 	"password": "9!october",
-// 	"database": "cookbook-nextjs-db",
-// 	"synchronize": true,
-// 	"logging": false,
-// 	"entities": ["entity/**/*.ts"],
-// 	"migrations": ["migration/**/*.ts"],
-// 	"subscribers": ["subscriber/**/*.ts"]
-// }
-// let connectionReadyPromise: Promise<Connection> | null = null;
 
 export const initializeDatabase = async (
   optionOverrides: Record<string, any> = {}

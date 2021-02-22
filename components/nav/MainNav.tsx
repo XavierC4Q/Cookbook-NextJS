@@ -21,10 +21,9 @@ function MainNav({
         layout="fill"
         onClick={() => router.replace("/")}
       />
-      {/*TODO: Update to actual links later*/}
       <div className={styles.navDesktopLinks}>
         <ul>
-          <Link href="/">Profile</Link>
+          <Link href="/profile/user/">Profile</Link>
         </ul>
       </div>
     </nav>

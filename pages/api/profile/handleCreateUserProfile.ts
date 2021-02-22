@@ -42,7 +42,7 @@ const handleCreateUserProfile = async (
     };
 
     const token = jwt.sign(userData, process.env.APP_SECRET!, {
-      expiresIn: "1m",
+      expiresIn: "365d",
     });
 
     return res.status(201).json({
