@@ -16,7 +16,7 @@ const signupFields: ISignupFields = {
 };
 
 function Signup() {
-  const { signup, error } = useContext(AuthContext);
+  const { signup } = useContext(AuthContext);
   const [inputs, setInputs] = useState({
     ...signupFields,
   });

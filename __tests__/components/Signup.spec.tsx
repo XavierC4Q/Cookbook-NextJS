@@ -16,7 +16,7 @@ describe("[COMPONENT] Signup", () => {
     Promise.resolve(true)
   );
   test("can submit successfully", () => {
-    const { getByTestId, debug, getByRole } = render(
+    const { getByTestId, getByRole } = render(
       <AuthContext.Provider
         value={{
           signup: mockSignup,
@@ -43,6 +43,5 @@ describe("[COMPONENT] Signup", () => {
       firstName: INPUT.firstName,
       lastName: INPUT.lastName,
     } as IUserProfileConfig);
-    debug();
   });
 });

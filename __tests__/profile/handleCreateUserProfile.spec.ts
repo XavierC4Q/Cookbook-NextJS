@@ -21,12 +21,12 @@ describe("/api/profile/handleCreateUserProfile", () => {
   test("can create a user profile", async () => {
     const { req, res } = createMocks({
       method: "POST",
-      body: {
+      body: JSON.stringify({
         firstName: mockUserProfile.firstName,
         lastName: mockUserProfile.lastName,
         email: mockUserProfile.email,
         password: mockUserProfile.password,
-      },
+      }) as any,
     });
 
     await handleCreateUserProfile(req, res);

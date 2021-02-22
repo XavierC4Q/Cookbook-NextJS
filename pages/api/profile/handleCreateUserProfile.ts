@@ -52,6 +52,7 @@ const handleCreateUserProfile = async (
       },
     });
   } catch (e) {
+    console.log('THE ERROR', e, req.body)
     return res.status(400).json({ message: e.message });
   }
 };

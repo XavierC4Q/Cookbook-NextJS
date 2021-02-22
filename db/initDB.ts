@@ -1,18 +1,41 @@
 import "reflect-metadata";
-import { Connection, createConnection, getConnectionOptions } from "typeorm";
+import { Connection, createConnection } from "typeorm";
+import User from "../entity/User";
+import Profile from "../entity/Profile";
+import Recipe from "../entity/Recipe";
+// {
+// 	"type": "postgres",
+// 	"host": "localhost",
+// 	"port": "5432",
+// 	"username": "postgres",
+// 	"password": "9!october",
+// 	"database": "cookbook-nextjs-db",
+// 	"synchronize": true,
+// 	"logging": false,
+// 	"entities": ["entity/**/*.ts"],
+// 	"migrations": ["migration/**/*.ts"],
+// 	"subscribers": ["subscriber/**/*.ts"]
+// }
+// let connectionReadyPromise: Promise<Connection> | null = null;
 
 export const initializeDatabase = async (
   optionOverrides: Record<string, any> = {}
 ): Promise<Connection> => {
-  const connectionOptions = await getConnectionOptions();
   const isTestEnv = process.env.NODE_ENV === "test";
   const database = isTestEnv ? process.env.DB_NAME_TEST : process.env.DB_NAME;
 
   const options: any = {
-    ...connectionOptions,
+    type: "postgres",
+    host: "localhost",
+    port: "5432",
+    username: "postgres",
+    password: "9!october",
+    synchronize: true,
+    logging: false,
     database,
+    entities: [User, Profile, Recipe],
+    name: isTestEnv ? "test" : "default",
     ...optionOverrides,
-    name: isTestEnv ? "test" : "default"
   };
 
   const connection = await createConnection(options);
