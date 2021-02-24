@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import UserProfile, {
   testIds as profileTestIds,
-} from "../../pages/profile/user";
+} from "../../pages/profile/user/[uid]";
 import { AuthContext } from "../../context/authContext";
 import { AuthUser } from "../../types";
 import initializeDatabase from "../../db/initDB";
@@ -44,6 +44,5 @@ describe("[PAGE] Profile Page", () => {
     );
 
     getByTestId(profileTestIds.profilePage);
-    debug();
   });
 });

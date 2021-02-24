@@ -19,7 +19,7 @@ describe("api/auth/handleGetUser", () => {
   test("should return a user given a token", async () => {
     const { req, res } = createMocks({
       method: "GET",
-      headers: { authorization: "faketestmocktoken" },
+      headers: { authorization: "Bearer faketestmocktoken" },
     });
 
     await handleGetUser(req, res);

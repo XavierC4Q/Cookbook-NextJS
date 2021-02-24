@@ -1,17 +1,24 @@
-import handleUpdateProfile from "../../pages/api/profile/handleUpdateProfile";
+import handleGetUserProfile from "../../pages/api/profile/handleGetUserProfile/[uid]";
 import { createMocks } from "node-mocks-http";
 import initializeDatabase from "../../db/initDB";
 import Profile from "../../entity/Profile";
 import User from "../../entity/User";
 
-const PROFILE_ID = 1;
-
 jest.mock("jsonwebtoken", () => ({
   verify: jest.fn(() => ({
     email: "test@email.com",
-    id: PROFILE_ID,
+    id: 201,
   })),
 }));
+
+let UID: number;
+
+const MOCK_PROFILE = {
+  firstName: "Cooker",
+  lastName: "Booker",
+  email: "mailmail@mail.com",
+  password: "password",
+};
 
 beforeAll(async () => {
   const connection = await initializeDatabase();
@@ -19,16 +26,17 @@ beforeAll(async () => {
   const userRepository = connection.getRepository(User);
 
   const newProfile = new Profile();
-  newProfile.firstName = "Test";
-  newProfile.lastName = "User";
+  newProfile.firstName = MOCK_PROFILE.firstName;
+  newProfile.lastName = MOCK_PROFILE.lastName;
   await profileRepository.save(newProfile);
 
   const newUser = new User();
-  newUser.email = "test@email.com";
-  newUser.password = "password";
+  newUser.email = MOCK_PROFILE.email;
+  newUser.password = MOCK_PROFILE.password;
   newUser.profile = newProfile;
   await userRepository.save(newUser);
 
+  UID = newUser.id;
   await connection.close();
 });
 
@@ -38,21 +46,17 @@ afterAll(async () => {
   await connection.close();
 })
 
-describe("/api/profile/handleUpdateProfile", () => {
-  test("can update a user profile", async () => {
+describe("[API] handleGetUserProfile", () => {
+  test("Gets an existing user by uid", async () => {
     const { req, res } = createMocks({
-      method: "PATCH",
-      body: {
-        id: PROFILE_ID,
-        displayName: "TestUser1",
-        lastName: "Lastname",
-      },
+      method: "GET",
       headers: {
-        authorization: `Bearer faketoken`,
+        authorization: "Bearer authorized",
+      },
+      query: {
+        uid: UID,
       },
     });
-
-    await handleUpdateProfile(req, res);
-    expect(res._getStatusCode()).toBe(200);
+    await handleGetUserProfile(req, res);
   });
 });
