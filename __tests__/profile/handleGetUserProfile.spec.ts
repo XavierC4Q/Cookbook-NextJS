@@ -44,7 +44,7 @@ afterAll(async () => {
   const connection = await initializeDatabase();
   await connection.dropDatabase();
   await connection.close();
-})
+});
 
 describe("[API] handleGetUserProfile", () => {
   test("Gets an existing user by uid", async () => {
@@ -58,5 +58,13 @@ describe("[API] handleGetUserProfile", () => {
       },
     });
     await handleGetUserProfile(req, res);
+
+    expect(res._getStatusCode()).toBe(200);
+    const { data } = res._getJSONData();
+
+    expect(data.id).toEqual(UID);
+    expect(data.email).toEqual(MOCK_PROFILE.email);
+    expect(data.profile.firstName).toEqual(MOCK_PROFILE.firstName);
+    expect(data.profile.lastName).toEqual(MOCK_PROFILE.lastName);
   });
 });
