@@ -8,6 +8,19 @@ import initializeDatabase from "../../db/initDB";
 import User from "../../entity/User";
 import Profile from "../../entity/Profile";
 
+jest.mock("next/router", () => ({
+  useRouter() {
+    return {
+      route: "/profile/user/1",
+      pathname: "",
+      query: {
+        uid: "1",
+      },
+      asPath: "",
+    };
+  },
+}));
+
 let USER: AuthUser | null = null;
 let UserProfileComponent = UserProfile as () => JSX.Element;
 
@@ -19,8 +32,8 @@ beforeAll(async () => {
   const newProfile = new Profile();
   newProfile.firstName = "Profile";
   newProfile.lastName = "Page";
-  newProfile.headline = 'I am the Profile Page';
-  newProfile.description = 'A description';
+  newProfile.headline = "I am the Profile Page";
+  newProfile.description = "A description";
   await profileRepository.save(newProfile);
   const newUser = new User();
   newUser.email = "profile@email.com";
@@ -33,7 +46,7 @@ beforeAll(async () => {
 
 describe("[PAGE] Profile Page", () => {
   test("Renders the profile page", () => {
-    const { getByTestId, debug } = render(
+    const { getByTestId } = render(
       <AuthContext.Provider
         value={{
           user: USER,

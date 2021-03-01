@@ -29,6 +29,26 @@ function useUser(uid: string, currentUser: AuthUser | null) {
     action: IUseUserAction
   ): IUseUserState => {
     switch (action.type) {
+      case "loading":
+        return {
+          ...state,
+          loading: true,
+          error: false,
+        };
+      case "setUser":
+        return {
+          ...state,
+          loading: false,
+          error: false,
+          user: action.payload!,
+        };
+      case "error":
+        return {
+          ...state,
+          loading: false,
+          error: false,
+          user: null,
+        };
       default:
         return state;
     }
@@ -57,7 +77,7 @@ function useUser(uid: string, currentUser: AuthUser | null) {
           },
         });
         const userData = await req.json();
-        console.log(userData)
+        console.log(userData);
         dispatch({ type: "setUser", payload: userData.data });
       } catch (e) {
         console.error(e);
@@ -65,7 +85,7 @@ function useUser(uid: string, currentUser: AuthUser | null) {
       }
     };
 
-    !isCurrentUserProfile  && getUserProfile();
+    !isCurrentUserProfile && getUserProfile();
   }, [uid, currentUser]);
 
   return {
